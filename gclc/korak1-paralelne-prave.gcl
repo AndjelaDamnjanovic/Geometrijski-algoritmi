@@ -1,0 +1,68 @@
+ang_picture 0 0 100 100
+% definisanje tacaka pogodnih za animaciju
+point A 30 28
+point A1 20 28
+point B 64 28
+point C 56 74
+
+cmark_rb A
+cmark_lb B
+cmark_t C
+
+line c A B
+line b A C
+line a B C
+
+drawsegment A B
+drawsegment A C
+drawsegment B C
+
+linethickness 0.6
+point D 0 74 140 74
+point E 0 28 140 28 
+trace D 255 0 0
+trace E 0 255 0
+
+distance dist A1 A
+angle alpha C A B
+med medc A A1
+intersec A2 medc b
+
+color 255 0 255
+translate A3 A1 A A
+translate A4 A2 A A
+
+dmc 3
+linethickness 0.7
+
+drawarc A A3 alpha
+printat_rt A {alpha}
+
+translate C1 A C A1
+translate C2 A C A2
+
+translate C3 A C A3
+translate C4 A C A4
+
+color 0 100 255
+angle gamma A C B
+drawarc C C2 gamma
+dmc 6
+printat_b C {gamma}
+
+dmc 3
+
+color 255 160 160
+translate B1 A B A1
+translate B3 A B A3
+
+angle betha A B C
+expression betha' {180-betha}
+turtle B2 B1 B betha' dist
+turtle B4 B3 B betha' dist
+
+drawarc B B4 betha
+printat_lt B {betha}
+
+animation_frames 100 20
+

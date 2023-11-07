@@ -1,0 +1,157 @@
+ang_picture 0 0 100 100
+% definisanje tacaka pogodnih za animaciju
+point A 30 28
+point tmp1 30 28 20 28
+point tmp2 30 28 25 19
+point tmp3 30 28 40 28
+point tmp4 30 28 35 37
+point A1 20 28
+
+point B 64 28
+point tmp5 64 28 54 28
+point tmp6 64 28 66 18
+point tmp7 64 28 74 28
+point tmp8 64 28 62 38
+
+point C 56 74
+point tmp9 56 74 46 74
+point tmp10 56 74 51 65
+point tmp11 56 74 66 74
+point tmp12 56 74 58 64 
+
+point D 20 28 46 74
+point E 25 19 51 65
+point F 66 18 58 64
+point G 74 28 66 74
+
+cmark_lb G
+cmark_rb F
+cmark_rb E
+cmark_lb D
+cmark_rb A
+cmark_lb B
+cmark_t C
+
+line c A B
+line b A C
+line a B C
+
+drawsegment A B
+drawsegment A C
+drawsegment B C
+
+color 255 0 0
+
+parallel p C c
+drawline p
+
+color 0 255 0
+drawline c
+
+color 0 0 255 
+drawdashline A C
+drawdashline B C
+
+distance dist A1 A
+angle alpha C A B
+med medc A A1
+intersec A2 medc b
+
+linethickness 0.6
+trace tmp1 255 0 255
+trace tmp2 255 0 255
+trace tmp3 255 0 255
+trace tmp4 255 0 255
+trace tmp9 255 0 255
+trace tmp10 255 0 255
+
+trace tmp5 255 160 160
+trace tmp6 255 160 160
+trace tmp7 255 160 160
+trace tmp8 255 160 160
+trace tmp11 255 160 160
+trace tmp12 255 160 160
+
+color 255 0 255
+drawarrow A tmp1 1
+drawarrow A tmp2 1
+drawarrow A tmp3 1
+drawarrow A tmp4 1
+drawarrow C tmp9 1
+drawarrow C tmp10 1
+
+color 255 160 160
+drawarrow B tmp5 1
+drawarrow B tmp6 1
+drawarrow B tmp7 1
+drawarrow B tmp8 1
+drawarrow C tmp11 1
+drawarrow C tmp12 1
+
+color 255 0 255
+translate A3 A1 A A
+translate A4 A2 A A
+
+dmc 3
+linethickness 0.7
+drawarc A A1 alpha
+printat_lb A {alpha}
+
+drawarc A A3 alpha
+printat_rt A {alpha}
+
+translate C1 A C A1
+translate C2 A C A2
+
+drawarc C C1 alpha
+printat_lb C {alpha}
+
+translate C3 A C A3
+translate C4 A C A4
+
+color 0 100 255
+angle gamma A C B
+drawarc C C2 gamma
+dmc 6
+printat_b C {gamma}
+
+dmc 3
+
+color 255 160 160
+translate B1 A B A1
+translate B3 A B A3
+
+angle betha A B C
+expression betha' {180-betha}
+turtle B2 B1 B betha' dist
+turtle B4 B3 B betha' dist
+
+%angle betha B2 B B1
+drawarc B B2 betha
+drawarc B B4 betha
+printat_rb B {betha}
+printat_lt B {betha}
+
+translate C5 B C B2
+
+drawarc C C5 betha
+printat_rb C {betha}
+
+% zapisujemo tacke A2, A4, C2, C4, B2 i B4 tako da dokazivac moze da ih obradjuje
+perp norm A1 b
+intersec A2 norm b
+translate A4 A2 A A
+
+translate C2 A C A2
+translate C4 C2 C C
+
+perp norma B3 a
+intersec B2 norma a
+translate B4 B2 B B
+
+animation_frames 100 30
+
+translate S B2 B B
+
+theorem_name {identical-B2B4}
+prove {identical S B4}

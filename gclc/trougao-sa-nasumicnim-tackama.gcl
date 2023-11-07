@@ -1,0 +1,150 @@
+ang_picture 0 0 100 100
+
+% posto ne zelimo da unapred zadajemo tacke, a treba nam lep vizuelni prikaz, biracemo svaku tacku iz intervala koji omogucavanju lepa iscrtavanja
+random xa
+expression xA {xa*4+1}
+
+random ya
+expression yA {ya*4}
+
+random xb
+expression xB {xb*4+6}
+
+expression diff {xB-xA}
+random xc
+expression xC {xc*diff+xA}
+
+random yc
+expression yC {yc*4+5}
+
+expression xA1 {xA-0.7}
+
+% uradi da se tacke biraju nasumicno
+ang_point A xA yA
+ang_point A1 xA1 yA
+ang_point B xB yA
+ang_point C xC yC
+
+cmark_t A
+cmark_b B
+cmark_t C
+
+line c A B
+line b A C
+line a B C
+
+drawsegment A B
+drawsegment A C
+drawsegment B C
+
+color 255 0 0
+
+parallel p C c
+drawline p
+
+color 0 255 0
+drawline c
+
+color 0 0 255
+drawdashline A C
+drawdashline B C
+
+color 255 0 255
+linethickness 0.7
+drawsegment A A1
+drawarrow A A1 1
+
+bis bisA C A B
+sim A2 bisA A1
+drawsegment A A2
+drawarrow A A2 1
+
+
+perp q A c
+sim A3 q A1
+drawsegment A A3
+drawarrow A A3 1
+
+perp r A b
+sim A4 r A2
+drawsegment A A4
+drawarrow A A4 1
+
+dmc 3
+angle alpha A1 A A2
+drawarc A A1 alpha
+printat_lb A {alpha}
+
+drawarc A A3 alpha
+printat_rt A {alpha}
+
+translate C1 A C A1
+translate C2 A C A2
+
+drawsegment C C1
+drawarrow C C1 1
+
+drawsegment C C2
+drawarrow C C2 1
+
+color 255 0 255
+drawarc C C1 alpha
+printat_lb C {alpha}
+
+color 255 160 160
+translate C3 A C A3
+translate C4 A C A4
+
+drawsegment C C3
+drawarrow C C3 1
+
+%drawarc C C3 alpha
+%printat_rt  C {alpha} 
+
+color 0 255 255
+angle gamma A C B
+drawarc C C2 gamma
+dmc 6
+printat_b C {gamma}
+
+dmc 3
+
+color 255 160 160
+translate B1 A B A1
+translate B3 A B A3
+bis bisB A B C
+sim B2 bisB B1
+sim B4 bisB B3
+
+drawsegment B B1
+drawsegment B B2
+drawsegment B B3
+drawsegment B B4
+
+drawarrow B B1 1
+drawarrow B B2 1
+drawarrow B B3 1
+drawarrow B B4 1
+
+angle betha B2 B B1
+drawarc B B2 betha
+drawarc B B4 betha
+printat_rb B {betha}
+printat_lt B {betha}
+
+%translate C5 B C B2
+%drawsegment C C5
+%drawarrow C C5 1
+%drawarc C C5 betha
+%printat_lt C {betha}
+
+translate C6 B C B4
+drawsegment C C6
+drawarrow C C6 1
+drawarc C C6 betha
+printat_rb C {betha}
+
+
+
+
+
